@@ -1,14 +1,78 @@
-.navbar{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 8px 4%;
+.navbar {
+  height: 72px;
+  padding: 0 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #ffffff;
+  border-bottom: 1px solid #eef0f3;
+  position: sticky;
+  top: 0;
+  z-index: 20;
 }
 
-.navbar .logo{
-    width: max(10%,80px);
+.navbar-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
 }
 
-.navbar .profile{
-    width: 40px;
+.navbar-logo {
+  width: 120px;
+  object-fit: contain;
+}
+
+.navbar-left h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.navbar-left p {
+  margin: 3px 0 0;
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.navbar-action {
+  border: 1px solid #ffe0d8;
+  background: #fff5f2;
+  color: tomato;
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-weight: 600;
+  cursor: default;
+}
+
+.navbar-profile {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 2px solid #f1f5f9;
+  object-fit: cover;
+}
+
+@media (max-width: 700px) {
+  .navbar {
+    padding: 0 18px;
+  }
+
+  .navbar-left div {
+    display: none;
+  }
+
+  .navbar-logo {
+    width: 105px;
+  }
+
+  .navbar-action {
+    display: none;
+  }
 }

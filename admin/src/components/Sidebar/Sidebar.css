@@ -1,37 +1,93 @@
-.sidebar{
-  width: 18%;
-  min-height: 100vh;  
-  border: 1.5px solid #a9a9a9;
-  border-top: 0;
-  font-size: max(1vw,10px);
+.sidebar {
+  width: 260px;
+  min-height: calc(100vh - 72px);
+  background: #ffffff;
+  border-right: 1px solid #eef0f3;
+  padding: 24px 16px;
+  position: sticky;
+  top: 72px;
 }
 
-.sidebar-options{
-    padding-top: 50px;
-    padding-left: 20%;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+.sidebar-header {
+  padding: 0 12px 18px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #9ca3af;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
 }
 
-.sidebar-option{
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    border: 1px solid #a9a9a9;
-    border-right: 0;
-    padding: 8px 10px;
-    border-radius: 3px 0px 3px;
-    cursor: pointer;
+.sidebar-options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
-.sidebar-option.active{
-  background-color: #fff0ed;
-  border-color: tomato;
+.sidebar-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 14px;
+  border-radius: 14px;
+  color: #4b5563;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 600;
+  transition: 0.2s ease;
 }
 
-@media(max-width:900px){
-  .sidebar-option p{
+.sidebar-option:hover {
+  background: #f9fafb;
+  color: #111827;
+  transform: translateX(2px);
+}
+
+.sidebar-option.active {
+  background: linear-gradient(135deg, #fff1ed, #ffffff);
+  color: tomato;
+  box-shadow: 0 8px 22px rgba(255, 99, 71, 0.12);
+}
+
+.sidebar-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  background: #f3f4f6;
+  flex-shrink: 0;
+}
+
+.sidebar-option.active .sidebar-icon {
+  background: #ffe1d9;
+}
+
+.sidebar-icon img {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+}
+
+.sidebar-option p {
+  margin: 0;
+}
+
+@media (max-width: 900px) {
+  .sidebar {
+    width: 82px;
+    padding: 22px 12px;
+  }
+
+  .sidebar-header {
+    display: none;
+  }
+
+  .sidebar-option {
+    justify-content: center;
+    padding: 12px;
+  }
+
+  .sidebar-option p {
     display: none;
   }
 }
