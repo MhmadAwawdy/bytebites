@@ -8,7 +8,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
 const placeOrder = async (req, res) => {
 
   // ✅ FIX 1: مش hardcoded — من .env
-  const frontend_url = process.env.FRONTEND_URL || 'http://localhost:5173';
+  const frontend_url = process.env.FRONTEND_URL || 'http://bytebites-frontend-nosayba-2.s3-website-us-east-1.amazonaws.com';
 
   try {
     const newOrder = new orderModel({

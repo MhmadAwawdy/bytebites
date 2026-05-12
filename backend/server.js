@@ -51,5 +51,5 @@ app.use((err, req, res, next) => {
 
 // ── Start ─────────────────────────────────────
 app.listen(port, () => {
-  console.log(`🚀 Server started on http://localhost:${port}`)
+  console.log(`🚀 Server started on http://bytebites-frontend-nosayba-2.s3-website-us-east-1.amazonaws.com:${port}`)
 })

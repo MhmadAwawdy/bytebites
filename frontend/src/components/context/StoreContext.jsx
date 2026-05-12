@@ -8,7 +8,7 @@ const StoreContextProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState({});
   const [food_list, setFood_list] = useState([]);
   const [loading, setLoading] = useState(true);
-  const url = "http://localhost:5000";
+  const url = "http://bytebites-backend-alb-204151322.us-east-1.elb.amazonaws.com";
   const [token, setToken] = useState("");
 
   const addToCart = async (itemId) => {
