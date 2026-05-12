@@ -1,24 +1,35 @@
-import fs from 'fs'
 import foodModel from '../models/foodModel.js'
+import { PutObjectCommand, DeleteObjectCommand } from "@aws-sdk/client-s3"
+import { s3 } from "../config/s3.js"
 
 // Add food item
 const addFood = async (req, res) => {
   try {
-    // ✅ التحقق من وجود الصورة
     if (!req.file) {
       return res.status(400).json({ success: false, message: 'Image is required' })
     }
+
+    const imageKey = `food-images/${Date.now()}-${req.file.originalname}`;
+
+    await s3.send(new PutObjectCommand({
+      Bucket: process.env.S3_BUCKET_NAME,
+      Key: imageKey,
+      Body: req.file.buffer,
+      ContentType: req.file.mimetype
+    }));
+
+    const imageUrl = `https://${process.env.S3_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${imageKey}`;
 
     const food = new foodModel({
       name: req.body.name,
       description: req.body.description,
       price: Number(req.body.price),
       category: req.body.category,
-      image: req.file.filename
+      image: imageUrl
     })
 
     await food.save();
-    res.json({ success: true, message: 'Food Added' })
+    res.json({ success: true, message: 'Food Added', imageUrl })
 
   } catch (error) {
     console.error('addFood error:', error.message)
@@ -46,14 +57,14 @@ const removeFood = async (req, res) => {
       return res.status(404).json({ success: false, message: 'Food not found' })
     }
 
-    // ✅ FIX: بس امسح الصورة لو كانت ملف محلي (مش URL من الإنترنت)
-    if (food.image && !food.image.startsWith('http')) {
-      const imagePath = `uploads/${food.image}`;
-      if (fs.existsSync(imagePath)) {
-        fs.unlink(imagePath, (err) => {
-          if (err) console.error('Failed to delete image:', err.message)
-        })
-      }
+    // Delete image from S3 if it's an S3 URL
+    if (food.image && food.image.includes(".amazonaws.com/")) {
+      const imageKey = food.image.split(".amazonaws.com/")[1];
+
+      await s3.send(new DeleteObjectCommand({
+        Bucket: process.env.S3_BUCKET_NAME,
+        Key: imageKey
+      }));
     }
 
     await foodModel.findByIdAndDelete(req.body.id)

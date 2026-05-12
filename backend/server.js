@@ -26,6 +26,14 @@ app.use('/api/user', userRouter)
 app.use('/api/cart', cartRouter)
 app.use('/api/order', orderRouter)
 
+app.get("/health", (req, res) => {
+  res.status(200).json({
+    status: "OK",
+    message: "Backend is healthy",
+    service: "Byte Bites Backend"
+  });
+});
+
 app.get("/", (req, res) => {
   res.json({ success: true, message: 'API is running 🚀' })
 })
