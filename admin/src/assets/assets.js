@@ -14,4 +14,4 @@ export const assets ={
     parcel_icon
 }
 
-export const url = 'http://bytebites-backend-alb-204151322.us-east-1.elb.amazonaws.com'
+export const url = import.meta.env.VITE_API_URL || 'http://bytebites-backend-alb-204151322.us-east-1.elb.amazonaws.com'

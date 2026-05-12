@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      '/api': 'http://bytebites-frontend-nosayba-2.s3-website-us-east-1.amazonaws.com'
+      '/api': 'http://bytebites-backend-alb-204151322.us-east-1.elb.amazonaws.com'
     }
   }
 })

@@ -5,8 +5,17 @@ import multer from 'multer'
 const foodRouter = express.Router();
 
 // Image Storage Engine (Using memory storage for S3)
-const storage = multer.memoryStorage();
-const upload = multer({ storage: storage });
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB max
+  fileFilter: (req, file, cb) => {
+    if (file.mimetype.startsWith('image/')) {
+      cb(null, true);
+    } else {
+      cb(new Error('Only image files are allowed'), false);
+    }
+  }
+});
 
 foodRouter.post("/add", upload.single("image"), addFood);
 foodRouter.get('/list',listFood)

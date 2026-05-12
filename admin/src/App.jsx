@@ -9,7 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
 
-  const url = 'http://bytebites-backend-alb-204151322.us-east-1.elb.amazonaws.com';
+  const url = import.meta.env.VITE_API_URL || 'http://bytebites-backend-alb-204151322.us-east-1.elb.amazonaws.com';
 
   return (
     <div>

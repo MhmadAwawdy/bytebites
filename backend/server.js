@@ -14,7 +14,20 @@ const port = process.env.PORT || 4000
 
 // ── Middleware ────────────────────────────────
 app.use(express.json())
-app.use(cors())
+
+// ── CORS Configuration ───────────────────────
+const allowedOrigins = [
+  process.env.FRONTEND_URL,
+  process.env.ADMIN_URL,
+  'http://localhost:5173',
+  'http://localhost:5174',
+].filter(Boolean)
+
+app.use(cors({
+  origin: allowedOrigins,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  credentials: true,
+}))
 
 // ── DB ────────────────────────────────────────
 connectDB()
@@ -51,5 +64,5 @@ app.use((err, req, res, next) => {
 
 // ── Start ─────────────────────────────────────
 app.listen(port, () => {
-  console.log(`🚀 Server started on http://bytebites-frontend-nosayba-2.s3-website-us-east-1.amazonaws.com:${port}`)
+  console.log(`🚀 Server started on http://localhost:${port}`)
 })
