@@ -17,17 +17,34 @@ app.use(express.json())
 
 // ── CORS Configuration ───────────────────────
 const allowedOrigins = [
+  // S3 static hosting URLs
+  'http://bytebites-frontend-nosayba-2.s3-website-us-east-1.amazonaws.com',
+  'http://bytebites-admin-nosayba-2.s3-website-us-east-1.amazonaws.com',
+  // From .env (overrides / extras)
   process.env.FRONTEND_URL,
   process.env.ADMIN_URL,
+  // Local development
   'http://localhost:5173',
   'http://localhost:5174',
 ].filter(Boolean)
 
-app.use(cors({
-  origin: allowedOrigins,
+const corsOptions = {
+  origin: (origin, callback) => {
+    // Allow requests with no origin (e.g. mobile apps, curl, Postman)
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true)
+    } else {
+      callback(new Error(`CORS: Origin ${origin} not allowed`))
+    }
+  },
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'token'],
   credentials: true,
-}))
+}
+
+app.use(cors(corsOptions))
+// Handle preflight OPTIONS requests for all routes
+app.options('*', cors(corsOptions))
 
 // ── DB ────────────────────────────────────────
 connectDB()
