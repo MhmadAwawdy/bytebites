@@ -7,8 +7,9 @@ import { StoreContext } from './../context/StoreContext';
 const Navbar = ({setShowLogin}) => {
 
   const [menu, setMenu] = useState('home');
+  const [showSearch, setShowSearch] = useState(false);
 
-  const {getTotalCartAmount, token, setToken} = useContext(StoreContext);
+  const {getTotalCartAmount, token, setToken, searchQuery, setSearchQuery} = useContext(StoreContext);
 
   const navigate = useNavigate();
 
@@ -16,6 +17,13 @@ const Navbar = ({setShowLogin}) => {
     localStorage.removeItem("token");
     setToken("");
     navigate("/")
+  }
+
+  const toggleSearch = () => {
+    setShowSearch(prev => !prev);
+    if (showSearch) {
+      setSearchQuery("");
+    }
   }
 
   return (
@@ -28,7 +36,19 @@ const Navbar = ({setShowLogin}) => {
             <a href='#footer' onClick={()=> setMenu('contact-us')} className={menu === 'contact-us'?'active':''}>contact us</a>
         </ul>
         <div className="navbar-right">
-            <img src={assets.search_icon} alt="" />
+            <div className="navbar-search-wrapper">
+              <img src={assets.search_icon} alt="search" onClick={toggleSearch} style={{cursor:'pointer'}} />
+              {showSearch && (
+                <input
+                  type="text"
+                  className="navbar-search-input"
+                  placeholder="Search food..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  autoFocus
+                />
+              )}
+            </div>
             <div className="navbar-search-icon">
                 <Link to='/cart'><img src={assets.basket_icon} alt="" /></Link>
                 <div className={getTotalCartAmount()===0?'':'dot'}></div>

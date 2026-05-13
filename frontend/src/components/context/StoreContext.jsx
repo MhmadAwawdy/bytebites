@@ -10,6 +10,7 @@ const StoreContextProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const url = "http://bytebites-backend-alb-204151322.us-east-1.elb.amazonaws.com";
   const [token, setToken] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
 
   const addToCart = async (itemId) => {
     if (!cartItems[itemId]) {
@@ -87,6 +88,8 @@ const StoreContextProvider = ({ children }) => {
     token,
     setToken,
     loading,
+    searchQuery,
+    setSearchQuery,
   };
 
   return (
